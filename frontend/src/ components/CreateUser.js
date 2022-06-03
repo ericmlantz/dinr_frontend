@@ -1,39 +1,33 @@
-import { useState } from 'react'
+import { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { AddNewUser } from '../services/UserServices'
 
-const CreateUser = () => {
-  const [addUser, setAddUser] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    username: '',
-    password: '',
-    street_loc: '',
-    apt_loc: '',
-    city_loc: '',
-    state_loc: '',
-    zip_loc: '',
-  })
+const CreateUser = ({user, setUser, GetSingleUser, restaurants}) => {
+
+  //Hooks
+  const navigate = useNavigate()
+  //-------------------------
 
   const handleChange = (event) => {
-    setAddUser({...addUser, [event.target.name]: event.target.value})
+    setUser({...user, [event.target.name]: event.target.value})
   }
 
   const handleSubmit = async (event) => {
     event.preventDefault()
     await AddNewUser({
-      firstName: addUser.firstName,
-      lastName: addUser.lastName,
-      email: addUser.email,
-      username: addUser.username,
-      password: addUser.password,
-      street_loc: addUser.street_loc,
-      apt_loc: addUser.apt_loc,
-      city_loc: addUser.city_loc,
-      state_loc: addUser.state_loc.toUpperCase(),
-      zip_loc : addUser.zip_loc,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      username: user.username,
+      password: user.password,
+      street_loc: user.street_loc,
+      apt_loc: user.apt_loc,
+      city_loc: user.city_loc,
+      state_loc: user.state_loc.toUpperCase(),
+      zip_loc: user.zip_loc,
+      matches: restaurants,
     })
-    setAddUser({
+    setUser({
       firstName: '',
       lastName: '',
       email: '',
@@ -45,6 +39,7 @@ const CreateUser = () => {
       state_loc: '',
       zip_loc: '',
     })
+    navigate('/matches')
   }
   return (
     <div>
@@ -58,7 +53,7 @@ const CreateUser = () => {
                 name="firstName"
                 placeholder="First Name"
                 onChange={handleChange}
-                value={addUser.firstName}
+                value={user.firstName}
               />
             </div>
             {/* Last Name */}
@@ -70,7 +65,7 @@ const CreateUser = () => {
                 name="lastName"
                 placeholder="Last Name"
                 onChange={handleChange}
-                value={addUser.lastName}
+                value={user.lastName}
               />
             </div>
             {/* Email */}
@@ -82,7 +77,7 @@ const CreateUser = () => {
                 name="email"
                 placeholder="Email"
                 onChange={handleChange}
-                value={addUser.email}
+                value={user.email}
               />
             </div>
             {/* Username */}
@@ -94,7 +89,7 @@ const CreateUser = () => {
                 name="username"
                 placeholder="Username"
                 onChange={handleChange}
-                value={addUser.username}
+                value={user.username}
               />
             </div>
             {/* Password */}
@@ -106,7 +101,7 @@ const CreateUser = () => {
                 name="password"
                 placeholder="Password"
                 onChange={handleChange}
-                value={addUser.password}
+                value={user.password}
               />
             </div>
             {/* Street Address */}
@@ -118,7 +113,7 @@ const CreateUser = () => {
                 name="street_loc"
                 placeholder="Street Address"
                 onChange={handleChange}
-                value={addUser.street_loc}
+                value={user.street_loc}
               />
             </div>
             {/* Apt, Unit, etc */}
@@ -130,7 +125,7 @@ const CreateUser = () => {
                 name="apt_loc"
                 placeholder="Apt, Unit, Post box, etc"
                 onChange={handleChange}
-                value={addUser.apt_loc}
+                value={user.apt_loc}
               />
             </div>
             {/* City */}
@@ -142,7 +137,7 @@ const CreateUser = () => {
                 name="city_loc"
                 placeholder="City"
                 onChange={handleChange}
-                value={addUser.city_loc}
+                value={user.city_loc}
               />
             </div>
             {/* State */}
@@ -155,7 +150,7 @@ const CreateUser = () => {
                 placeholder="State Abbreviation"
                 maxLength='2'
                 onChange={handleChange}
-                value={addUser.state_loc}
+                value={user.state_loc}
               />
             </div>
             {/* Zip Code */}
@@ -167,7 +162,7 @@ const CreateUser = () => {
                 name="zip_loc"
                 placeholder="Zip Code"
                 onChange={handleChange}
-                value={addUser.zip_loc}
+                value={user.zip_loc}
               />
             </div>
           <button type='submit'></button>
